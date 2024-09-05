@@ -17,7 +17,7 @@ void Ajouter_un_Livre_au_Stock (char NameBook [][20], char Auteur [][20], float 
 		}
 		(*NombrBook)++;
 		printf ("%d ", *NombrBook);
-		getchar();
+		getchar ();
 		printf ("Ok!\nTell us what's its name? ");
 		fgets (NameBook[*NombrBook-1], 20, stdin);
 		NameBook[*NombrBook-1][strcspn (NameBook [*NombrBook-1], "\n")] = '\0';
@@ -56,25 +56,43 @@ void Afficher_Tous_les_Livres_Disponibles (char NameBook [][20], char Auteur [][
 	}
 }
 
-void Mettre_a_Jour_la_Quantite_Livre (int mettre, int PlaceChange[], int i){
+void Supprimer_un_Livre_du_Stock (char NameBook[][20],char Auteur[][20], float Prix[], int Quantite[], int *NombrBook, int i);
+void Mettre_a_Jour_la_Quantite_Livre (char NameBook[][20], char Auteur[][20], float Prix[], int NombrBook, int mettre, int Quantite[], int i){
 	
 	int buySell;
 	
-	if (mettre == 1){
+	if (mettre == 2){
 		printf ("how many books did you buy? ");
 		scanf ("%d", &buySell);
 		
-		PlaceChange [i] += buySell;
+		Quantite [i] += buySell;
 	}
 	else{
 		printf ("how many books did you sell? ");
 		scanf ("%d", &buySell);
 		
-		PlaceChange [i] -= buySell;
+		Quantite [i] -= buySell;
+		if (Quantite [i] <= 0)
+			Supprimer_un_Livre_du_Stock (NameBook, Auteur, Prix, Quantite, NombrBook, i);
 	}
 }
 
-void Supprimer_un_Livre_du_Stock (){
+void Supprimer_un_Livre_du_Stock (char NameBook[][20],char Auteur[][20], float Prix[], int Quantite[], int *NombrBook, int i){
+	int j;
+	
+	for (j = i; j < *NombrBook; j++){
+		strcpy (NameBook [j], NameBook [j+1]);
+		strcpy (Auteur [j], Auteur [j+1]);
+		Prix [j] = Prix [j+1];
+		Quantite [j] = Quantite [j+1];
+		
+	}
+	--(*NombrBook);
+}
+
+
+void Afficher_le_nombre_total_de_livres_en_stock ( int NombrBook){
+	printf ("we have %d Book in our laibririe", NombrBook);
 }
 int main() {
 	char NameBook [10][20];
@@ -95,6 +113,7 @@ int main() {
 		printf ("did you sell more book (1) or there is a new Quantite(2) : ");
 		scanf ("%d", &mettre);
 	}while(mettre != 1 && mettre != 2);
+	getchar();
 	printf ("what is name the book do you wanna to chenge its quantite ");
 	fgets (sersh, sizeof (sersh), stdin);
 	sersh [strcspn (sersh, "\n")] = '\0';
@@ -103,9 +122,11 @@ int main() {
 		if (strcasecmp (NameBook [i], sersh) == 0)
 			break;
 	
-	Mettre_a_Jour_la_Quantite_Livre (mettre, Quantite, i); 
+	Mettre_a_Jour_la_Quantite_Livre (NameBook, Auteur, Prix, NombrBook, mettre, Quantite, i); 
 	for (j = 0; j < i;i++)
-		sersh[j] = NULL;
+		sersh[j] = '\0';
+	
+	getchar ();
 	printf ("what is the book's name  do you wanna to delet ");
 	fgets (sersh, sizeof (sersh), stdin);
 	sersh [strcspn (sersh, "\n")] = '\0';
@@ -115,6 +136,7 @@ int main() {
 			break;
 			
 	Supprimer_un_Livre_du_Stock (NameBook, Auteur, Prix, Quantite, &NombrBook, i);
+	Afficher_le_nombre_total_de_livres_en_stock(NombrBook);
 	
 	return 0;
 }
