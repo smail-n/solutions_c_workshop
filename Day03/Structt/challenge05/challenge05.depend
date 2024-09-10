@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1725932468 source:c:\users\hp\desktop\solutions_c_workshop\day03\structt\challenge05\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

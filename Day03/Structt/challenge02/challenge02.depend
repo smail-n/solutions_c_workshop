@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1725921780 source:c:\users\hp\desktop\solutions_c_workshop\day03\stringg\challenge02\main.c
+	<stdio.h>
+	<stdlib.h>
+

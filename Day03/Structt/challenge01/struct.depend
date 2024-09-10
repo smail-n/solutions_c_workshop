@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1725918926 source:c:\users\hp\desktop\solutions_c_workshop\day03\struct\main.c
+	<stdio.h>
+	<stdlib.h>
+
